@@ -1,0 +1,32 @@
+    .navbar-fixed-height {
+        height: 70px;
+        /* Set your desired height */
+    }
+
+    .navbar-brand {
+        margin-right: 20px;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    #search {
+        flex-grow: 1;
+        max-width: 400px;
+    }
+
+    .btn-toolbar {
+        margin-left: 20px;
+    }
+
+    .btn {
+        margin-right: 10px;
+    }
+
+    .dropdown-menu {
+        min-width: 200px;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 10px;
+
+    }

@@ -1,0 +1,27 @@
+
+
+    body {
+        background-color: #fff5e4 !important;
+        /* Use a specific class to avoid affecting the navbar */
+    }
+
+    .card {
+        height: 400px;
+        
+    }
+
+    .card-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-footer form {
+        margin: 0;
+    }
