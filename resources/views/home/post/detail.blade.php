@@ -37,7 +37,7 @@
                         @if (auth()->id() === $chapter->user_id)
                             {{-- Edit Chapter Button --}}
                             <!-- <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#editChapterModal{{ $chapter->id }}">Edit</button> -->
+                                        data-bs-target="#editChapterModal{{ $chapter->id }}">Edit</button> -->
 
                             {{-- Delete Chapter Button --}}
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
@@ -48,39 +48,39 @@
                     {{-- Edit Chapter Modal --}}
                     <!-- @if (auth()->id() === $chapter->user_id)
     <div class="modal fade" id="editChapterModal{{ $chapter->id }}" tabindex="-1"
-                                aria-labelledby="editChapterModalLabel{{ $chapter->id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form method="POST" action="{{ route('chapters.update', $chapter->id) }}">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editChapterModalLabel{{ $chapter->id }}">Edit
-                                                    Chapter
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="title" class="form-label">Chapter Title</label>
-                                                    <input type="text" class="form-control" id="title" name="title"
-                                                        value="{{ $chapter->title }}" required>
+                                    aria-labelledby="editChapterModalLabel{{ $chapter->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form method="POST" action="{{ route('chapters.update', $chapter->id) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editChapterModalLabel{{ $chapter->id }}">Edit
+                                                        Chapter
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="content" class="form-label">Chapter Content</label>
-                                                    <textarea class="form-control" id="content" name="content" rows="5" required>{{ $chapter->content }}</textarea>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="title" class="form-label">Chapter Title</label>
+                                                        <input type="text" class="form-control" id="title" name="title"
+                                                            value="{{ $chapter->title }}" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="content" class="form-label">Chapter Content</label>
+                                                        <textarea class="form-control" id="content" name="content" rows="5" required>{{ $chapter->content }}</textarea>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                                            </div>
-                                        </form>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
     @endif -->
 
                     {{-- Delete Chapter Modal --}}
