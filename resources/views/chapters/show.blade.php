@@ -4,7 +4,7 @@
 @section('content')
     <div class="container">
         <h1>{{ $chapter->title }}</h1>
-        <p>{{ $chapter->content }}</p>
+        <p>{!! $chapter->content !!}</p> <!-- Render HTML content -->
         <small>Posted by {{ $chapter->user->username ?? 'Unknown User' }} on
             {{ $chapter->created_at->format('M d, Y') }}</small>
     </div>

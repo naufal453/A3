@@ -16,13 +16,15 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        // Sorting logic
+        // Get the sorting parameter from the request
         $sort = $request->get('sort', 'latest'); // Default is 'latest'
 
         if ($sort == 'oldest') {
-            $posts = Post::orderBy('created_at', 'asc')->get();
+            $posts = Post::withCount('likes')->orderBy('created_at', 'asc')->get();
+        } elseif ($sort == 'most_liked') {
+            $posts = Post::withCount('likes')->orderBy('likes_count', 'desc')->get();
         } else {
-            $posts = Post::orderBy('created_at', 'desc')->get();
+            $posts = Post::withCount('likes')->orderBy('created_at', 'desc')->get();
         }
 
         return view('home.index', compact('posts'));
@@ -59,7 +61,8 @@ class PostController extends Controller
 
             $post->save();
 
-            return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+            return redirect()->route('user.show', ['username' => Auth::user()->username])
+                             ->with('success', 'Post created successfully.');
         }
 
     /**
@@ -90,8 +93,9 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         // Authorization check
-        if ($post->user_id != \Illuminate\Support\Facades\Auth::user()->id) {
-            return redirect()->route('user.show', ['id' => \Illuminate\Support\Facades\Auth::user()->id])->with('error', 'Unauthorized action.');
+        if ($post->user_id != Auth::id()) {
+            return redirect()->route('user.show', ['username' => Auth::user()->username])
+                             ->with('error', 'Unauthorized action.');
         }
 
         // Validate the request data
@@ -102,7 +106,8 @@ class PostController extends Controller
 
         $post->update($validated);
 
-        return redirect()->route('user.show', ['id' => $post->user_id])->with('flash_message', 'Post Updated!');
+        return redirect()->route('user.show', ['username' => $post->user->username])
+                         ->with('flash_message', 'Post Updated!');
     }
 
     /**
@@ -113,12 +118,14 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         // Authorization check
-        if ($post->user_id != \Illuminate\Support\Facades\Auth::id()) {
-            return redirect()->route('user.show', ['id' => \Illuminate\Support\Facades\Auth::id()])->with('error', 'Unauthorized action.');
+        if ($post->user_id != Auth::id()) {
+            return redirect()->route('user.show', ['username' => Auth::user()->username])
+                             ->with('error', 'Unauthorized action.');
         }
 
         $post->delete();
 
-        return redirect()->route('user.show', ['id' => $post->user_id])->with('flash_message', 'Post Deleted!');
+        return redirect()->route('user.show', ['username' => $post->user->username])
+                         ->with('flash_message', 'Post Deleted!');
     }
 }

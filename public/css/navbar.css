@@ -1,32 +1,156 @@
-    .navbar-fixed-height {
-        height: 70px;
-        /* Set your desired height */
-    }
+/* .navbar-fixed-height {
+    height: 90px;
+    /* Set your desired height */
+*/ #search {
+    flex-grow: 1;
+    max-width: 400px;
+}
 
-    .navbar-brand {
-        margin-right: 20px;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
+.btn-toolbar {
+    margin-left: 20px;
+}
 
-    #search {
-        flex-grow: 1;
-        max-width: 400px;
-    }
+.btn {
+    margin-right: 10px;
+}
 
-    .btn-toolbar {
-        margin-left: 20px;
-    }
+.dropdown-menu {
+    min-width: 200px;
+}
 
-    .btn {
-        margin-right: 10px;
-    }
+.navbar-nav .nav-item {
+    margin-left: 10px;
 
-    .dropdown-menu {
-        min-width: 200px;
-    }
+}
 
-    .navbar-nav .nav-item {
-        margin-left: 10px;
+.user-dropdown .dropdown-toggle {
+    background-color: #FFF5E4;
+    color: #6A9C89;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
 
-    }
+.user-dropdown .dropdown-toggle:hover {
+    background-color: #FFD9A0;
+    color: #4A7A5C;
+}
+
+.user-dropdown .dropdown-menu {
+    border-radius: 8px;
+    border: none;
+    /* padding: 10px; */
+    min-width: 200px;
+}
+
+.user-dropdown .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.user-dropdown .dropdown-item:hover {
+    background-color: #FFF5E4;
+    color: #6A9C89;
+}
+
+.user-dropdown .dropdown-item i {
+    font-size: 16px;
+    color: #6A9C89;
+}
+
+/* Create Story Button */
+.create-story-btn {
+    background-color: #6A9C89;
+    /* Custom green color */
+    color: #6A9C89;
+    /* White text */
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.create-story-btn:hover {
+    background-color: #4A7A5C;
+    /* Darker green on hover */
+
+}
+
+.create-story-btn svg {
+    fill: #6A9C89;
+    /* Ensure the icon matches the text color */
+}
+
+.create-story-btn span {
+    margin-left: 5px;
+    /* Add spacing between the icon and text */
+}
+
+/* Ensure the navbar brand logo scales properly */
+.brand-logo {
+    max-height: 50px;
+    /* Adjust the height as needed */
+    width: auto;
+}
+
+/* Style for the logo text */
+.logo-text {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.0;
+    color: #FFF;
+    /* White text */
+}
+
+/* Align the logo and text properly */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Add spacing between the logo and text */
+}
+
+/* Navbar background and text color */
+.navbar {
+    background-color: #6A9C89 !important;
+    /* Match the green theme */
+    color: #FFF;
+    /* White text for contrast */
+}
+
+/* Navbar toggler icon */
+/* .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+} */
+
+/* Navbar buttons */
+.btn-outline-dark {
+    color: #FFF;
+    border-color: #FFF;
+}
+
+.btn-outline-dark:hover {
+    background-color: #FFF;
+}
+
+#createstory {
+    background-color: #FFD9A0;
+    border-color: #FFD9A0;
+}
+
+#createstory:hover {
+    background-color: #FFB870;
+    border-color: #FFB870;
+}
+
+#createstory:focus {
+    background-color: #FFB870;
+    border-color: #FFB870;
+}

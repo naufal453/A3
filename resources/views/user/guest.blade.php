@@ -1,6 +1,7 @@
 @guest
 
-    <body <h1>Homepage</h1>
+    <body>
+        <h1>Homepage</h1>
         <h6>You're not logged in</h6>
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
