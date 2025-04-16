@@ -13,13 +13,13 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('show');
     }
 
     public function show($username)
     {
         $user = User::with('posts')->where('username', $username)->firstOrFail();
-        return view('user.show', compact('user'));
+        return view('dashboard.show', compact('user'));
     }
 
     public function edit($username)

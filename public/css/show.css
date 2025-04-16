@@ -25,3 +25,21 @@
     .card-footer form {
         margin: 0;
     }
+
+    /* Dropdown menu fixes */
+.dropdown-menu {
+    min-height: auto !important;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 0.25rem 0;
+}
+
+.dropdown-menu form {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-item {
+    padding: 0.25rem 1rem;
+    white-space: nowrap;
+}

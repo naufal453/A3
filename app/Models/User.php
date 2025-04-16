@@ -28,4 +28,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    public function savedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'saved_posts');
+    }
+
+    public function archivedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'archived_posts');
+    }
 }

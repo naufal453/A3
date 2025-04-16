@@ -34,7 +34,7 @@
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title">{{ $result->title ?? 'Unknown Title' }}</h5>
                                         <p class="card-text">
-                                             {{ Str::limit(strip_tags(html_entity_decode($result->description)), 100) }}
+                                            {!! Str::limit(strip_tags(html_entity_decode($result->description)), 100) !!}
                                         </p>
                                         <p class="card-text mt-auto">
                                             <small class="text-body-secondary">
@@ -54,8 +54,7 @@
                         </div>
 
                         <!-- Card for smaller devices -->
-                        <div class="card d-md-none mb-3"
-                            onclick="window.location='{{ route('posts.show', $result->id) }}'">
+                        <div class="card d-md-none mb-3" onclick="window.location='{{ route('posts.show', $result->id) }}'">
                             @if ($result->image_path)
                                 <img src="{{ asset('storage/' . $result->image_path) }}" class="card-img-top"
                                     alt="Post Image">
@@ -65,7 +64,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ $result->title ?? 'Unknown Title' }}</h5>
                                 <p class="card-text">
-                                    {{ Str::limit($result->description ?? 'No description available', 100) }}
+                                    {!! Str::limit($result->description ?? 'No description available', 100) !!}
                                 </p>
                                 <p class="card-text">
                                     <small class="text-body-secondary">

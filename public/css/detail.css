@@ -1,0 +1,130 @@
+#like-button {
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+#like-button:active {
+    transform: scale(0.95);
+}
+
+body {
+    background-color: #fff5e4 !important;
+}
+
+.main-content {
+    padding: 30px;
+}
+
+.post-description {
+    line-height: 1.6;
+    word-wrap: break-word;
+    max-width: 65ch;
+    position: relative;
+}
+
+.post-description.collapsed {
+    max-height: 4.8em; /* Show about 3 lines of text */
+    overflow: hidden;
+}
+
+.read-more-btn {
+    color: #007bff;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.book-cover {
+    height: 450px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Make sidebar image sticky */
+.col-md-4 {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    align-self: flex-start;
+}
+
+/* Ensure main content doesn't get hidden behind sticky sidebar */
+.col-md-8 {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 767.98px) {
+    .col-md-4 {
+        position: static;
+    }
+}
+
+.info-section {
+    padding-left: 40px;
+}
+
+/* AJAX Button Styles */
+.btn-ajax {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-ajax .spinner-border {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.btn-ajax:disabled {
+    opacity: 0.8;
+}
+
+/* Save button states */
+.btn-save {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-save:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.btn-saved {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+/* Archive button states */
+.btn-archive {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-archive:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+.btn-archived {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* List Example Navigation Styles */
+#chapter-list {
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    width: 250px;
+    margin-left: 75px;
+
+}
+.list-group-item:hover {
+    background-color: #e2e6ea;
+}
+
+
+

@@ -11,7 +11,7 @@ class CommentController extends Controller{
     public function store(CommentRequest $request)
     {
         $comment = new Comment();
-        $comment->content = $request->content;
+        $comment->content = strip_tags($request->content); // Sanitize input
         $comment->user_id = Auth::id();
         $comment->post_id = $request->post_id;
         $comment->save();
@@ -20,7 +20,7 @@ class CommentController extends Controller{
             'success' => true,
             'comment' => [
                 'id' => $comment->id,
-                'content' => $comment->content,
+                'content' => e($comment->content), // Escape output
                 'created_at' => $comment->created_at->format('d M Y, H:i'),
                 'user' => [
                     'id' => $comment->user_id,

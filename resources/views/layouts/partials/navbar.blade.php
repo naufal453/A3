@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-<nav class="navbar bg-body-tertiary navbar-expand-lg fixed-top shadow p-3 mb-5 rounded"
+<nav class="navbar bg-body-tertiary navbar-expand-lg fixed-top shadow-sm p-3 mb-5" style="z-index: 1000;"
     style="background-color: #6A9C89 !important; border-radius: 0px !important;">
     <div class="container-fluid">
         <!-- Brand -->
@@ -62,19 +62,29 @@
                                 <path
                                     d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
                             </svg>
-                            <span class="username">{{ auth()->user()->username }}</span>
+                            <span style="font-size: 15px" class="username">{{ auth()->user()->username }}</span>
                         </button>
 
                         <!-- Dropdown Menu -->
-                        <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 200px;">
+                        <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 125px;">
                             <li>
-                                <a class="dropdown-item"
+                                <a style="font-size: 20px" class="dropdown-item"
                                     href="{{ route('user.show', ['username' => auth()->user()->username]) }}">
                                     <i class="bi bi-speedometer2 me-2"></i> Dashboard
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item"
+                                <a style="font-size: 20px" class="dropdown-item" href="{{ route('posts.saved') }}">
+                                    <i class="bi bi-bookmark me-2"></i> Saved
+                                </a>
+                            </li>
+                            <li>
+                                <a style="font-size: 20px" class="dropdown-item" href="{{ route('posts.archived') }}">
+                                    <i class="bi bi-archive me-2"></i> Archived
+                                </a>
+                            </li>
+                            <li>
+                                <a style="font-size: 20px" class="dropdown-item"
                                     href="{{ route('user.usersettings', ['username' => auth()->user()->username]) }}">
                                     <i class="bi bi-gear me-2"></i> Settings
                                 </a>
@@ -83,7 +93,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a href="{{ route('logout.perform') }}" class="dropdown-item text-danger">
+                                <a style="font-size: 20px" href="{{ route('logout.perform') }}" class="dropdown-item text-danger">
                                     <i class="bi bi-box-arrow-right me-2"></i> Logout
                                 </a>
                             </li>

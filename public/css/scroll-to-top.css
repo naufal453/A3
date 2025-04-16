@@ -1,0 +1,33 @@
+/* Scroll to Top Button - Matching List Group Theme */
+#scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 8px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#scrollToTopBtn:hover {
+    background-color: #f8f9fa;
+    color: #212529;
+    transform: translateX(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#scrollToTopBtn:active {
+    transform: scale(0.95) translateX(-5px);
+}
+
+#scrollToTopBtn i {
+    margin-right: 5px;
+}
