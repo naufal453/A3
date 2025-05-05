@@ -1,44 +1,6 @@
 @extends('layouts.app-master')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @section('content')
-    <style>
-        .post-image {
-            width: 200px;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 0.375rem;
-        }
-
-        @media (max-width: 576px) {
-            .post-image {
-                width: 50%;
-                height: auto;
-            }
-
-            .fixed-card-size {
-                height: 50%;
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-            }
-        }
-
-        .fixed-card-size {
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .description-limit {
-            display: -webkit-box;
-            -webkit-line-clamp: 6;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-    </style>
-
-
     <div class="content-area p-5 rounded">
         <div class="position-relative mb-5">
             <div class="container px-0">
@@ -58,10 +20,10 @@
         </form>
         <br>
 
-        <div class="row row-cols-1 row-cols-md-2 g-3">
+        <div class="row row-cols-1 row-cols-md-2 g-4 ">
             @foreach ($posts as $item)
-                <div class="col">
-                    <div class="card fixed-card-size mb-2 shadow-sm p-3 bg-body-tertiary rounded w-100"
+                <div class="col ">
+                    <div class=" card fixed-card-size mb-2 shadow-sm p-3 bg-body-tertiary rounded w-100"
                         onclick="window.location='{{ route('home.post.detail', ['id' => $item->id]) }}'">
                         <div class="d-flex flex-column flex-md-row h-100">
                             <div class="d-flex justify-content-center mb-3 mb-md-0 me-md-3">
@@ -118,7 +80,5 @@
                 </div>
             @endforeach
         </div>
-
-
     </div>
 @endsection

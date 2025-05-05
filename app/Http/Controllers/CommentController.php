@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\Post;
+use App\Notifications\CommentNotification;
 
 class CommentController extends Controller{
     public function store(CommentRequest $request)
@@ -15,6 +17,12 @@ class CommentController extends Controller{
         $comment->user_id = Auth::id();
         $comment->post_id = $request->post_id;
         $comment->save();
+
+        // Notify the post owner if commenter is not the owner
+        $post = Post::find($request->post_id);
+        if ($post && $post->user_id !== Auth::id()) {
+            $post->user->notify(new CommentNotification(Auth::user(), $post, $comment->content));
+        }
 
         return response()->json([
             'success' => true,

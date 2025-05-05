@@ -8,6 +8,7 @@ use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Chapter;
+use App\Models\Genre;
 
 class PostController extends BaseController
 {
@@ -34,7 +35,8 @@ class PostController extends BaseController
 
     public function create()
     {
-        return view('home.index');
+        $genres = Genre::all(); // or however you fetch genres
+        return view('home.post.add', compact('genres'));
     }
 
     public function store(Request $request)
@@ -43,6 +45,8 @@ class PostController extends BaseController
         $post->title = $request->title;
         $post->description = $request->description;
         $post->user_id = auth()->id();
+        $post->reference = $request->reference;
+        $post->genre = $request->filled('genre_custom') ? $request->genre_custom : $request->genre_select;
 
         if ($request->hasFile('image')) {
             $post->image_path = $this->imageUploadService->upload($request->file('image'));
@@ -61,6 +65,10 @@ class PostController extends BaseController
     {
         $post = Post::with(['user'])->findOrFail($id);
         $chapters = Chapter::where('post_id', $id)->get();
+
+        if ($post->is_archived && auth()->id() !== $post->user_id) {
+            return view('errors.storyarchived');
+        }
 
         return view('home.post.detail', compact('post', 'chapters'));
     }

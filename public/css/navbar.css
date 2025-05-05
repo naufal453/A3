@@ -125,6 +125,11 @@
     /* White text for contrast */
 }
 
+.notification-dropdown-scroll {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
 
 .btn-outline-dark {
     color: #FFF;

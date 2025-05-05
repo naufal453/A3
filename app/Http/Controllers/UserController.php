@@ -57,4 +57,13 @@ class UserController extends Controller
         return redirect()->route('user.usersettings', ['username' => $user->username])
                          ->with('success', 'Profile updated successfully.');
     }
+
+    // New method to mark notifications as read
+    public function markNotificationsRead(Request $request)
+    {
+        $user = auth()->user();
+        $user->unreadNotifications->markAsRead();
+
+        return response()->json(['success' => true]);
+    }
 }

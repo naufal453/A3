@@ -22,7 +22,8 @@ body {
 }
 
 .post-description.collapsed {
-    max-height: 4.8em; /* Show about 3 lines of text */
+    max-height: 4.8em;
+    /* Show about 3 lines of text */
     overflow: hidden;
 }
 
@@ -112,19 +113,17 @@ body {
 }
 
 /* List Example Navigation Styles */
-#chapter-list {
+/* #chapter-list {
     text-align: center;
     border: none;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #ffffff;
-    width: 250px;
-    margin-left: 75px;
+    background-color: #ffffff; */
+/* width: 300px; */
+/* margin-left: 100px; */
 
-}
+/* } */
+
 .list-group-item:hover {
     background-color: #e2e6ea;
 }
-
-
-

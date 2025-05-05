@@ -22,6 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Share unread notifications with navbar partial view
+        \Illuminate\Support\Facades\View::composer('layouts.partials.navbar', function ($view) {
+            if (auth()->check()) {
+                $user = auth()->user();
+                $notifications = $user->unreadNotifications()->limit(5)->get();
+                $unreadCount = $user->unreadNotifications()->count();
+                $view->with('notifications', $notifications);
+                $view->with('unreadCount', $unreadCount);
+            }
+        });
     }
 }

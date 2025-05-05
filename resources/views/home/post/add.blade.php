@@ -18,6 +18,40 @@
                         <input type="text" class="form-control" id="title" name="title" placeholder="Title"
                             maxlength="45" required />
                     </div>
+
+                    <!-- Reference input -->
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="reference" name="reference"
+                            placeholder="Reference (optional)" maxlength="255" />
+                    </div>
+
+                    <!-- Genre input (as checkboxes or select) -->
+                    <div class="mb-3">
+                        <label for="genre" class="form-label">Genre</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <select class="form-select w-auto" id="genre" name="genre_select"
+                                style="min-width: 180px;">
+                                <option value="" disabled>Select genre</option>
+                                <option value="Fantasy" selected>Fantasy</option>
+                                <option value="Drama">Drama</option>
+                                <option value="Action">Action</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Comedy">Comedy</option>
+                                <option value="Horror">Horror</option>
+                                <option value="Sci-Fi">Sci-Fi</option>
+                                <option value="Other">Other</option>
+                                @foreach ($genres ?? [] as $genre)
+                                    @if (!in_array($genre->name, ['Fantasy', 'Drama', 'Action', 'Romance', 'Comedy', 'Horror', 'Sci-Fi', 'Other']))
+                                        <option value="{{ $genre->name }}">{{ $genre->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <span class="mx-2">or</span>
+                            <input type="text" class="form-control w-auto" id="genre_custom" name="genre_custom"
+                                placeholder="Add new (max 10)" maxlength="10" style="min-width: 180px;" />
+                        </div>
+                    </div>
+
                     <style>
                         .genre-checklist {
                             background: #f8f9fa;

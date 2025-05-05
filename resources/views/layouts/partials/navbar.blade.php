@@ -53,6 +53,44 @@
 
                     <!-- User Dropdown -->
                     <div class="btn-group user-dropdown ms-auto" role="group">
+                        <button id="notificationDropdownBtn"
+                            class="btn btn-outline-dark btn-sm dropdown-toggle d-flex align-items-center position-relative"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901" />
+                            </svg>
+
+                        </button>
+                        <ul class="notification dropdown-menu dropdown-menu-end shadow notification-dropdown-scroll"
+                            style="min-width: 50px;">
+                            <li class="dropdown-header px-3 py-2">
+                                <strong>Notifikasi</strong>
+                            </li>
+                            @if (isset($notifications) && $notifications->count() > 0)
+                                @foreach ($notifications as $notification)
+                                    <li>
+                                        <a href="{{ route('posts.show', $notification->data['post_id']) }}#comments-section"
+                                            class="dropdown-item">
+                                            @if ($notification->type === 'App\Notifications\LikeNotification')
+                                                <i class="bi bi-hand-thumbs-up me-2"></i>
+                                            @elseif($notification->type === 'App\Notifications\CommentNotification')
+                                                <i class="bi bi-chat-left-text me-2"></i>
+                                            @else
+                                                <i class="bi bi-info-circle me-2"></i>
+                                            @endif
+                                            {!! $notification->data['message'] !!}
+                                            <br>
+                                        </a>
+
+                                    </li>
+                                @endforeach
+                            @else
+                                <li class="dropdown-item text-center text-muted">No new notifications</li>
+                            @endif
+
+                        </ul>
                         <!-- Dropdown Button -->
                         <button class="btn btn-outline-dark btn-sm dropdown-toggle d-flex align-items-center" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,23 +106,23 @@
                         <!-- Dropdown Menu -->
                         <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 125px;">
                             <li>
-                                <a style="font-size: 20px" class="dropdown-item"
+                                <a style="font-size: 15px" class="dropdown-item"
                                     href="{{ route('user.show', ['username' => auth()->user()->username]) }}">
                                     <i class="bi bi-speedometer2 me-2"></i> Dashboard
                                 </a>
                             </li>
                             <li>
-                                <a style="font-size: 20px" class="dropdown-item" href="{{ route('posts.saved') }}">
+                                <a style="font-size: 15px" class="dropdown-item" href="{{ route('posts.saved') }}">
                                     <i class="bi bi-bookmark me-2"></i> Saved
                                 </a>
                             </li>
                             <li>
-                                <a style="font-size: 20px" class="dropdown-item" href="{{ route('posts.archived') }}">
+                                <a style="font-size: 15px" class="dropdown-item" href="{{ route('posts.archived') }}">
                                     <i class="bi bi-archive me-2"></i> Archived
                                 </a>
                             </li>
                             <li>
-                                <a style="font-size: 20px" class="dropdown-item"
+                                <a style="font-size: 15px" class="dropdown-item"
                                     href="{{ route('user.usersettings', ['username' => auth()->user()->username]) }}">
                                     <i class="bi bi-gear me-2"></i> Settings
                                 </a>
@@ -93,7 +131,8 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a style="font-size: 20px" href="{{ route('logout.perform') }}" class="dropdown-item text-danger">
+                                <a style="font-size: 15px" href="{{ route('logout.perform') }}"
+                                    class="dropdown-item text-danger">
                                     <i class="bi bi-box-arrow-right me-2"></i> Logout
                                 </a>
                             </li>

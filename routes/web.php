@@ -65,6 +65,7 @@ Route::get('/post/{id}', [PostController::class, 'show'])->name('home.post.detai
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
+
 // Comments
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
@@ -74,7 +75,11 @@ Route::get('/posts/{id}/comments', [CommentController::class, 'show'])->name('po
 Route::post('/likes', [LikeController::class, 'store'])->name('likes.store');
 Route::delete('/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
 
+// Notifications mark as read
+Route::post('/notifications/mark-read', [App\Http\Controllers\UserController::class, 'markNotificationsRead'])->name('notifications.markRead');
+
 // Chapters
+
 Route::resource('chapters', ChapterController::class)->except(['create', 'edit']);
 
 // Search

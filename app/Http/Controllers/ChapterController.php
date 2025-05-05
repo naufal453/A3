@@ -33,7 +33,8 @@ class ChapterController extends Controller
     public function show($id)
     {
         $chapter = Chapter::findOrFail($id);
-        return view('chapters.show', compact('chapter'));
+        $post = $chapter->post;
+        return view('chapters.show', compact('chapter', 'post'));
     }
 
     /**

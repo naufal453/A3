@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Post;
+use App\Notifications\LikeNotification;
 
 class LikeController extends Controller
 {
@@ -18,6 +20,12 @@ class LikeController extends Controller
             'user_id' => Auth::id(),
             'post_id' => $request->post_id,
         ]);
+
+        // Notify the post owner if liker is not the owner
+        $post = Post::find($request->post_id);
+        if ($post && $post->user_id !== Auth::id()) {
+            $post->user->notify(new LikeNotification(Auth::user(), $post));
+        }
 
         $likesCount = Like::where('post_id', $request->post_id)->count();
 

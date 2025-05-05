@@ -18,26 +18,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify({ post_id: postId }),
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Update liked status
-                    const newLiked = !liked;
-                    likeButton.setAttribute('data-liked', newLiked ? 'true' : 'false');
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update liked status
+                        const newLiked = !liked;
+                        likeButton.setAttribute('data-liked', newLiked ? 'true' : 'false');
 
-                    // Toggle button color
-                    likeButton.classList.toggle('btn-danger', newLiked);
-                    likeButton.classList.toggle('btn-primary', !newLiked);
+                        // Toggle button color
+                        likeButton.classList.toggle('btn-secondary', newLiked);
+                        likeButton.classList.toggle('btn-primary', !newLiked);
 
-                    // Update icon and text
-                    likeIcon.className = newLiked ? 'bi bi-hand-thumbs-down-fill' : 'bi bi-hand-thumbs-up-fill';
-                    likeText.textContent = newLiked ? 'Dislike' : 'Like';
+                        // Update icon and text
+                        likeIcon.className = newLiked ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up';
+                        likeText.textContent = newLiked ? `${data.likes_count}` : `${data.likes_count}`;
 
-                    // Update like count
-                    likeCount.textContent = `${data.likes_count} ${data.likes_count === 1 ? 'like' : 'likes'}`;
-                }
-            })
-            .catch(error => console.error('Error:', error));
+                        // Update like count
+                        // likeCount.textContent = `${data.likes_count} ${data.likes_count === 1 ? 'like' : 'likes'}`;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         });
     }
 });
