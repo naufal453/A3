@@ -53,7 +53,7 @@
 
                     <!-- User Dropdown -->
                     <div class="btn-group user-dropdown ms-auto" role="group">
-                        <button id="notificationDropdownBtn"
+                        <!-- <button id="notificationDropdownBtn" 
                             class="btn btn-outline-dark btn-sm dropdown-toggle d-flex align-items-center position-relative"
                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -89,8 +89,7 @@
                             @else
                                 <li class="dropdown-item text-center text-muted">No new notifications</li>
                             @endif
-
-                        </ul>
+                        </ul> -->
                         <!-- Dropdown Button -->
                         <button class="btn btn-outline-dark btn-sm dropdown-toggle d-flex align-items-center" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
