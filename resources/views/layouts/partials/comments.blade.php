@@ -13,13 +13,11 @@
                 <br>
                 {{-- Delete Button --}}
                 @if (Auth::id() === $comment->user_id)
-                    <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                    <form method="POST" action="{{ url('/comments/' . $comment->id) }}"
+                        class="d-inline delete-comment-form">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-danger btn-sm" type="button"
-                            onclick="if(confirm('Are you sure you want to delete this comment?')) { this.form.submit(); }">
-                            Delete
-                        </button>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
                 @endif
             </div>
@@ -49,3 +47,19 @@
 
 {{-- Include External JavaScript --}}
 <script src="{{ asset('js/comments.js') }}"></script>
+
+{{-- Delete Comment Modal --}}
+
+
+<script>
+    // JavaScript to handle the deletion of a comment
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete-comment-form').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                if (!confirm('Are you sure you want to delete this comment?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    });
+</script>

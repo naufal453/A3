@@ -1,0 +1,232 @@
+
+        body {
+            background-color: #FFF5E4;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .auth-container {
+            display: flex;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background-color: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 440px;
+            padding: 40px 30px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .auth-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .auth-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #6A9C89;
+        }
+        
+        .auth-subtitle {
+            font-size: 15px;
+            color: #6c757d;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            height: 50px;
+            background: #f8f9fa;
+            color: #212529;
+            font-size: 15px;
+            border-radius: 8px;
+            box-shadow: none;
+            border: 1px solid #dee2e6;
+            padding-left: 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            box-shadow: none;
+            border: 1px solid #6A9C89;
+            background: #fff;
+        }
+        
+        .btn-primary {
+            background-color: #6A9C89;
+            border-color: #6A9C89;
+            color: #fff;
+            height: 50px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5d8b7a;
+            border-color: #5d8b7a;
+            transform: translateY(-2px);
+        }
+        
+        .text-divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .text-divider::before,
+        .text-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .text-divider::before {
+            margin-right: 10px;
+        }
+        
+        .text-divider::after {
+            margin-left: 10px;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            transition: all 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            background-color: #e9ecef;
+            color: #6A9C89;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .auth-footer a {
+            color: #6A9C89;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .password-field-container {
+            position: relative;
+        }
+        
+        .field-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .illustration-bg {
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .illustration-item {
+            position: absolute;
+        }
+        
+        .dots-1 {
+            width: 100px;
+            height: 150px;
+            background-color: rgba(106, 156, 137, 0.1);
+            opacity: 0.8;
+            border-radius: 8px;
+            bottom: 20%;
+            left: 10%;
+            background-image: radial-gradient(#6A9C89 2px, transparent 2px);
+            background-size: 10px 10px;
+        }
+        
+        .dots-2 {
+            width: 100px;
+            height: 150px;
+            background-color: rgba(106, 156, 137, 0.1);
+            opacity: 0.8;
+            border-radius: 8px;
+            top: 20%;
+            right: 10%;
+            background-image: radial-gradient(#6A9C89 2px, transparent 2px);
+            background-size: 10px 10px;
+        }
+        
+        .line-1 {
+            width: 120px;
+            height: 80px;
+            top: 35%;
+            left: 15%;
+            border: 2px solid rgba(106, 156, 137, 0.2);
+            border-radius: 8px;
+        }
+        
+        .line-2 {
+            width: 80px;
+            height: 120px;
+            bottom: 25%;
+            right: 15%;
+            border: 2px solid rgba(106, 156, 137, 0.2);
+            border-radius: 8px;
+        }
+        
+        .wave {
+            position: absolute;
+            width: 200px;
+            height: 50px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' class='shape-fill' fill='%236A9C89'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+        }
+        
+        .wave-1 {
+            top: 20%;
+            left: 20%;
+            transform: rotate(45deg);
+        }
+        
+        .wave-2 {
+            bottom: 20%;
+            right: 20%;
+            transform: rotate(225deg);
+        }

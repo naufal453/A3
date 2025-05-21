@@ -84,3 +84,9 @@ Route::resource('chapters', ChapterController::class)->except(['create', 'edit']
 
 // Search
 Route::get('/search', [SearchController::class, 'search'])->name('search.results');
+
+// Like a post
+Route::post('/posts/{post}/like', [\App\Http\Controllers\PostController::class, 'like'])->name('posts.like');
+
+// Unlike a post
+Route::post('/posts/{post}/unlike', [\App\Http\Controllers\PostController::class, 'unlike'])->name('posts.unlike');

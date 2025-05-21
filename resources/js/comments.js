@@ -58,6 +58,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Append new comment to the top of the list
                 commentsList.prepend(commentCard);
 
+                // Clear reload timeout if set (prevents page reload)
+                if (window.commentReloadTimeout) {
+                    clearTimeout(window.commentReloadTimeout);
+                    window.commentReloadTimeout = null;
+                }
+                if (window.commentSubmitBtn) {
+                    window.commentSubmitBtn.disabled = false;
+                }
+
                 // Clear textarea
                 commentForm.querySelector('textarea[name="content"]').value = '';
             } else {
@@ -68,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error posting comment:', error);
             alert('An error occurred while posting the comment.');
         } finally {
-            submitButton.disabled = false;
+            // submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
         }
     });

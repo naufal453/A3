@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Chapter;
 use App\Models\Genre;
+use App\Models\Like; // Add this at the top if you have a Like model
 
 class PostController extends BaseController
 {
@@ -111,5 +112,20 @@ class PostController extends BaseController
             'Post deleted successfully',
             ['username' => $post->user->username]
         );
+    }
+
+    public function like($id)
+    {
+        $post = Post::findOrFail($id);
+        // Prevent duplicate likes
+        $post->likes()->firstOrCreate(['user_id' => auth()->id()]);
+        return redirect()->back();
+    }
+
+    public function unlike($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->likes()->where('user_id', auth()->id())->delete();
+        return redirect()->back();
     }
 }

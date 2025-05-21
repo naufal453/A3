@@ -22,7 +22,7 @@
                     <!-- Reference input -->
                     <div class="mb-3">
                         <input type="text" class="form-control" id="reference" name="reference"
-                            placeholder="Reference (optional)" maxlength="255" />
+                            placeholder="Reference" maxlength="255" required />
                     </div>
 
                     <!-- Genre input (as checkboxes or select) -->
@@ -39,16 +39,28 @@
                                 <option value="Comedy">Comedy</option>
                                 <option value="Horror">Horror</option>
                                 <option value="Sci-Fi">Sci-Fi</option>
+                                <option value="Thriller">Thriller</option>
                                 <option value="Other">Other</option>
                                 @foreach ($genres ?? [] as $genre)
-                                    @if (!in_array($genre->name, ['Fantasy', 'Drama', 'Action', 'Romance', 'Comedy', 'Horror', 'Sci-Fi', 'Other']))
+                                    @if (
+                                        !in_array($genre->name, [
+                                            'Fantasy',
+                                            'Drama',
+                                            'Action',
+                                            'Romance',
+                                            'Comedy',
+                                            'Horror',
+                                            'Sci-Fi',
+                                            'Thriller',
+                                            'Other',
+                                        ]))
                                         <option value="{{ $genre->name }}">{{ $genre->name }}</option>
                                     @endif
                                 @endforeach
                             </select>
-                            <span class="mx-2">or</span>
+                            {{-- <span class="mx-2">or</span>
                             <input type="text" class="form-control w-auto" id="genre_custom" name="genre_custom"
-                                placeholder="Add new (max 10)" maxlength="10" style="min-width: 180px;" />
+                                placeholder="Add new (max 10)" maxlength="10" style="min-width: 180px;" /> --}}
                         </div>
                     </div>
 
@@ -76,7 +88,7 @@
                     <!-- Image upload with preview -->
                     <div class="input-group mb-3">
                         <input class="form-control" type="file" id="image" name="image" accept="image/*"
-                            required onchange="previewImage(event)" />
+                            required onchange="handleImageChange(event)" />
                         <label class="input-group-text" for="image">Add Cover</label>
                     </div>
                     <div class="mb-3 text-center">
@@ -96,6 +108,7 @@
 <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 <!-- DOMPurify -->
 <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
+<script src="https://unpkg.com/browser-image-compression/dist/browser-image-compression.js"></script>
 
 <script>
     function previewImage(event) {
@@ -115,6 +128,46 @@
             preview.src = '#';
             preview.style.display = 'none';
         }
+    }
+
+    async function handleImageChange(event) {
+        const input = event.target;
+        const preview = document.getElementById('imagePreview');
+
+        if (!input.files.length) {
+            preview.src = '#';
+            preview.style.display = 'none';
+            return;
+        }
+
+        let file = input.files[0];
+
+        // Only compress if image is larger than 1MB
+        if (file.size > 1 * 1024 * 1024) {
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1200,
+                useWebWorker: true
+            };
+            try {
+                file = await imageCompression(file, options);
+
+                // Replace the file in the input
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                input.files = dataTransfer.files;
+            } catch (error) {
+                console.error('Image compression error:', error);
+            }
+        }
+
+        // Show the (compressed or original) image in the preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -140,11 +193,18 @@
         });
 
         var form = document.querySelector('form');
-        form.addEventListener('submit', function() {
+        var imageInput = document.getElementById('image');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
             var descriptionInput = document.querySelector('#description');
             var quillContent = quill.root.innerHTML;
             var sanitizedContent = DOMPurify.sanitize(quillContent);
             descriptionInput.value = sanitizedContent;
+
+            // Now submit the form programmatically
+            form.submit();
         });
     });
 </script>
