@@ -12,11 +12,13 @@ class PostPolicy
         return true;
     }
 
-    public function view(User $user, Post $post)
+    public function view(?User $user, Post $post)
     {
-        return true;
+        if ($user && $user->id === (int) $post->user_id) {
+            return true;
+        }
+        return !$post->is_archived;
     }
-
     public function create(User $user)
     {
         return true;
@@ -24,17 +26,17 @@ class PostPolicy
 
     public function update(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        return (int) $user->id === (int) $post->user_id;
     }
 
     public function delete(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        return (int) $user->id === (int) $post->user_id;
     }
 
     public function archive(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        return (int) $user->id === (int) $post->user_id;
     }
 
     public function save(User $user)

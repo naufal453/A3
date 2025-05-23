@@ -36,7 +36,9 @@
                             </div>
                             <div class="flex-grow-1 d-flex flex-column">
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">{{ $item->title ?? 'Unknown Title' }}</h5>
+                                    <h5 class="card-title">
+                                        {!! preg_replace('/(.{15})/u', '$1<wbr>', e($item->title ?? 'Unknown Title')) !!}
+                                    </h5>
                                     <small class="card-text description-limit">
                                         {{ strip_tags(html_entity_decode($item->description)) }}
                                     </small>

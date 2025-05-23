@@ -7,9 +7,10 @@ use App\Http\Requests\StorePostRequest;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Chapter;
 use App\Models\Genre;
-use App\Models\Like; // Add this at the top if you have a Like model
+
 
 class PostController extends BaseController
 {
@@ -67,8 +68,9 @@ class PostController extends BaseController
         $post = Post::with(['user'])->findOrFail($id);
         $chapters = Chapter::where('post_id', $id)->get();
 
-        if ($post->is_archived && auth()->id() !== $post->user_id) {
-            return view('errors.storyarchived');
+        // If post is archived and either guest or not the owner, show 404
+        if ($post->is_archived && (auth()->guest() || auth()->id() !== $post->user_id)) {
+            abort(404);
         }
 
         return view('home.post.detail', compact('post', 'chapters'));
@@ -76,15 +78,23 @@ class PostController extends BaseController
 
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::find($id);
+        if (!$post) {
+            return response()->view('errors.404', ['errorType' => 'post'], 404);
+        }
         $this->authorize('update', $post);
         return view('home.post.edit', compact('post'));
     }
 
     public function update(Request $request, $id)
     {
-        $post = Post::findOrFail($id);
-        $this->authorize('update', $post);
+        //$iduser=Auth::users();
+        //dd($id);
+        $post = Post::find($id);
+        if (!$post) {
+            return response()->view('errors.404', ['errorType' => 'post'], 404);
+        }
+        //$this->authorize('update', $post);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -102,7 +112,10 @@ class PostController extends BaseController
 
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::find($id);
+        if (!$post) {
+            return response()->view('errors.404', ['errorType' => 'post'], 404);
+        }
         $this->authorize('delete', $post);
 
         $post->delete();
@@ -114,18 +127,5 @@ class PostController extends BaseController
         );
     }
 
-    public function like($id)
-    {
-        $post = Post::findOrFail($id);
-        // Prevent duplicate likes
-        $post->likes()->firstOrCreate(['user_id' => auth()->id()]);
-        return redirect()->back();
-    }
 
-    public function unlike($id)
-    {
-        $post = Post::findOrFail($id);
-        $post->likes()->where('user_id', auth()->id())->delete();
-        return redirect()->back();
-    }
 }

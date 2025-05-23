@@ -11,7 +11,7 @@
             <div class="col-md-8">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <h3 id="description-section">{{ $post->title }}</h3>
+                        <h3 id="description-section">{!! preg_replace('/(.{15})/u', '$1<wbr>', e($post->title ?? 'Unknown Title')) !!}</h3>
                         <h6 class="text-uppercase">by <strong>{{ $post->user->username }}</strong></h6>
 
                         <p>{{ $post->created_at->format('M d, Y') }}</p>

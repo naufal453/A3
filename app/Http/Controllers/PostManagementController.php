@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostManagementController extends BaseController
 {
@@ -45,6 +46,7 @@ class PostManagementController extends BaseController
 
     public function archivedPosts()
     {
+
         $posts = auth()->user()->posts()
             ->with(['chapters', 'likes', 'comments'])
             ->where('is_archived', true)

@@ -95,12 +95,12 @@
                                     <h6 class="top-0 start-50 " style="margin-top: 0px;">
                                         <a href="{{ route('home.post.detail', ['id' => $post->id]) }}"
                                             class="text-decoration-none text-dark">
-                                            {{ Str::limit($post->title, 20) }}
+                                            {!! preg_replace('/(.{15})/u', '$1<wbr>', e(Str::limit($post->title ?? 'Unknown Title', 20))) !!}
                                         </a>
                                     </h6>
 
                                     <p style="font-size: 0.9em;" class="mb-1 text-muted">
-                                        {{ Str::limit(strip_tags(html_entity_decode($post->description)), 30) }}</p>
+                                        {{ Str::limit(strip_tags(html_entity_decode($post->description)), 10) }}</p>
                                     <small style="font-size: 0.8em;" class="text-body-secondary">Posted
                                         {{ \Carbon\Carbon::parse($post->updated_at)->diffForHumans() }}</small>
                                 </div>

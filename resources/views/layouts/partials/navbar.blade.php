@@ -37,7 +37,7 @@
             @auth
                 <div class="d-flex align-items-center ms-auto"> <!-- Add ms-auto to align to the right -->
                     <!-- Add Post Button -->
-                    @if (Route::is('user.show') && auth()->id() === $user->id)
+                    @if (Route::is('user.show') && isset($user) && auth()->id() === $user->id)
                         <button id="createstory"
                             class="btn btn-primary btn-sm me-2 d-flex align-items-center create-story-btn" type="button"
                             data-bs-toggle="modal" data-bs-target="#staticBackdrop">

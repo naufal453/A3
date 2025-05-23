@@ -64,6 +64,8 @@ Route::get('/logout', [LogoutController::class, 'perform'])->name('logout.perfor
 Route::get('/post/{id}', [PostController::class, 'show'])->name('home.post.detail');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::put('/posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
+
 
 
 // Comments
