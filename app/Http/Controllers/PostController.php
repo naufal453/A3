@@ -7,10 +7,10 @@ use App\Http\Requests\StorePostRequest;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Chapter;
 use App\Models\Genre;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class PostController extends BaseController
 {
@@ -21,12 +21,13 @@ class PostController extends BaseController
         $this->imageUploadService = $imageUploadService;
     }
 
+    // Tampilkan daftar postingan
     public function index(Request $request)
     {
         $sort = $request->get('sort', 'latest');
         $query = Post::withCount('likes')->where('is_archived', false);
 
-        $posts = match($sort) {
+        $posts = match ($sort) {
             'oldest' => $query->orderBy('created_at', 'asc')->get(),
             'most_liked' => $query->orderBy('likes_count', 'desc')->get(),
             default => $query->orderBy('created_at', 'desc')->get(),
@@ -35,12 +36,14 @@ class PostController extends BaseController
         return view('home.index', compact('posts'));
     }
 
+    // Form tambah postingan
     public function create()
     {
-        $genres = Genre::all(); // or however you fetch genres
+        $genres = Genre::all();
         return view('home.post.add', compact('genres'));
     }
 
+    // Simpan postingan baru
     public function store(Request $request)
     {
         $post = new Post();
@@ -63,38 +66,45 @@ class PostController extends BaseController
         );
     }
 
+    // Detail postingan
     public function show($id)
     {
-        $post = Post::with(['user'])->findOrFail($id);
-        $chapters = Chapter::where('post_id', $id)->get();
-
-        // If post is archived and either guest or not the owner, show 404
-        if ($post->is_archived && (auth()->guest() || auth()->id() !== $post->user_id)) {
-            abort(404);
+        $post = Post::with('user')->find($id);
+        if (!$post) {
+            return response()->view('errors.404', ['errorType' => 'post'], 404);
         }
+
+        try {
+            $this->authorize('view', $post);
+        } catch (AuthorizationException $e) {
+            // Pengunjung tidak berhak melihat post ini
+            return response()->view('errors.404', ['errorType' => 'post'], 404);
+        }
+
+        $chapters = Chapter::where('post_id', $id)->get();
 
         return view('home.post.detail', compact('post', 'chapters'));
     }
 
+    // Form edit
     public function edit($id)
     {
         $post = Post::find($id);
         if (!$post) {
             return response()->view('errors.404', ['errorType' => 'post'], 404);
         }
+
         $this->authorize('update', $post);
         return view('home.post.edit', compact('post'));
     }
 
+    // Update data postingan
     public function update(Request $request, $id)
     {
-        //$iduser=Auth::users();
-        //dd($id);
         $post = Post::find($id);
         if (!$post) {
             return response()->view('errors.404', ['errorType' => 'post'], 404);
         }
-        //$this->authorize('update', $post);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -110,14 +120,15 @@ class PostController extends BaseController
         );
     }
 
+    // Hapus postingan
     public function destroy($id)
     {
         $post = Post::find($id);
         if (!$post) {
             return response()->view('errors.404', ['errorType' => 'post'], 404);
         }
-        $this->authorize('delete', $post);
 
+        $this->authorize('delete', $post);
         $post->delete();
 
         return $this->successResponse(
@@ -127,5 +138,26 @@ class PostController extends BaseController
         );
     }
 
+    public function like($id)
+    {
+        $post = Post::findOrFail($id);
+        $user = auth()->user();
 
+        // Prevent duplicate likes
+        if (!$post->likes->contains('user_id', $user->id)) {
+            $post->likes()->create(['user_id' => $user->id]);
+        }
+
+        return back();
+    }
+
+    public function unlike($id)
+    {
+        $post = Post::findOrFail($id);
+        $user = auth()->user();
+
+        $post->likes()->where('user_id', $user->id)->delete();
+
+        return back();
+    }
 }

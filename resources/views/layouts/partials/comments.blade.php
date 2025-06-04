@@ -45,14 +45,8 @@
     @endauth
 </form>
 
-{{-- Include External JavaScript --}}
-<script src="{{ asset('js/comments.js') }}"></script>
-
-{{-- Delete Comment Modal --}}
-
-
+{{-- Delete Comment Confirmation (optional, not AJAX) --}}
 <script>
-    // JavaScript to handle the deletion of a comment
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.delete-comment-form').forEach(function(form) {
             form.addEventListener('submit', function(e) {

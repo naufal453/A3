@@ -14,33 +14,47 @@
             <div class="illustration-item wave wave-1"></div>
             <div class="illustration-item wave wave-2"></div>
         </div>
-        
+
         <div class="login-card shadow-sm">
             <div class="auth-header">
                 <h2 class="auth-title">Login</h2>
                 <p class="auth-subtitle">Hey, Enter your details to get sign in to your account</p>
             </div>
-            
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    {{-- Cek jika error login gagal --}}
+                    @if (
+                        $errors->first() === 'These credentials do not match our records.' ||
+                        $errors->first() === 'auth.failed'
+                    )
+                        Akun atau password salah.
+                    @else
+                        {{ $errors->first() }}
+                    @endif
+                </div>
+            @endif
+
             <form method="post" action="{{ route('login.perform') }}">
                 @csrf
-                
+
                 <div class="form-group">
-                    <input type="text" id="username" class="form-control" name="username" 
+                    <input type="text" id="username" class="form-control" name="username"
                         value="{{ old('username') }}" placeholder="Enter Email / Phone No" required autofocus>
                     @if ($errors->has('username'))
                         <span class="text-danger text-left">{{ $errors->first('username') }}</span>
                     @endif
                 </div>
-                
+
                 <div class="form-group password-field-container">
-                    <input id="password-field" type="password" class="form-control" name="password" 
+                    <input id="password-field" type="password" class="form-control" name="password"
                         placeholder="Passcode" required>
                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     @if ($errors->has('password'))
                         <span class="text-danger text-left">{{ $errors->first('password') }}</span>
                     @endif
                 </div>
-                
+
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary w-100">
@@ -48,16 +62,16 @@
                     </button>
                 </div>
             </form>
-            
 
-            
+
+
             <div class="auth-footer">
                 Don't have an account? <a href="{{ route('register.perform') }}">Request Now</a>
             </div>
         </div>
     </div>
 </body>
-    
+
 @endsection
 
 @section('scripts')

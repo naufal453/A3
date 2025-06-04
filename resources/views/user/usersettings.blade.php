@@ -31,7 +31,7 @@
                             <input type="text" class="form-control" id="username" name="username"
                                 value="{{ auth()->user()->username }}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;visibility: hidden;">
                             <label for="email" class="control-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email"
                                 value="{{ auth()->user()->email }}" required>

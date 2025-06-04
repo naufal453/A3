@@ -4,8 +4,9 @@
     <div class="content-area p-5 rounded">
         <div class="position-relative mb-5">
             <div class="container px-0">
-                <img class="img-fluid w-100 rounded shadow" style="max-height: 300px; object-fit: cover;"
-                    src="{{ asset('images/banner.png') }}" alt="Alternate Arc Archive Banner">
+                @include('home.banner')
+                {{-- <img class="img-fluid w-100 rounded shadow" style="max-height: 300px; object-fit: cover;"
+                    src="{{ asset('images/banner.png') }}" alt="Alternate Arc Archive Banner"> --}}
             </div>
         </div>
 

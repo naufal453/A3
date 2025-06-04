@@ -79,15 +79,13 @@
                             $liked = $post->likes->contains('user_id', auth()->id());
                         @endphp
                         <div class="d-flex align-items-center">
-                            <button id="like-button" class="btn {{ $liked ? 'btn-secondary' : 'btn-primary' }} me-2"
-                                data-liked="{{ $liked ? 'true' : 'false' }}" data-post-id="{{ $post->id }}">
-                                <i id="like-icon" class="bi {{ $liked ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up' }}">
-                                </i>
-                                <span id="like-text">{{ $liked ? $post->likes->count() : $post->likes->count() }}</span>
-                            </button>
-
-                            {{-- <p id="like-count" class="mb-0">{{ $post->likes->count() }}
-                                    {{ Str::plural('like', $post->likes->count()) }}</p> --}}
+                            <form action="{{ $liked ? route('posts.unlike', $post->id) : route('posts.like', $post->id) }}" method="POST" class="me-2">
+                                @csrf
+                                <button type="submit" class="btn {{ $liked ? 'btn-secondary' : 'btn-primary' }}">
+                                    <i class="bi {{ $liked ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up' }}"></i>
+                                    <span>{{ $post->likes->count() }}</span>
+                                </button>
+                            </form>
                         </div>
                     @endif
                 </div>

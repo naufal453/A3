@@ -12,13 +12,30 @@ class PostPolicy
         return true;
     }
 
-    public function view(?User $user, Post $post)
-    {
-        if ($user && $user->id === (int) $post->user_id) {
-            return true;
-        }
+public function view(?User $user, Post $post)
+{
+    // \Log::info('PostPolicy@view called', [
+    //     'user_id' => optional($user)->id,
+    //     'post_owner_id' => $post->user_id,
+    //     'is_archived' => $post->is_archived,
+    //     'is_owner' => ((int) optional($user)->id === (int) $post->user_id),
+    // ]);
+
+    if (is_null($user)) {
         return !$post->is_archived;
     }
+
+    if ((int) $user->id === (int) $post->user_id) {
+        return true;
+    }
+
+    return !$post->is_archived;
+}
+
+
+
+
+
     public function create(User $user)
     {
         return true;

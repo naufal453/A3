@@ -78,7 +78,7 @@ Route::post('/likes', [LikeController::class, 'store'])->name('likes.store');
 Route::delete('/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
 
 // Notifications mark as read
-Route::post('/notifications/mark-read', [App\Http\Controllers\UserController::class, 'markNotificationsRead'])->name('notifications.markRead');
+// Route::post('/notifications/mark-read', [App\Http\Controllers\UserController::class, 'markNotificationsRead'])->name('notifications.markRead');
 
 // Chapters
 
