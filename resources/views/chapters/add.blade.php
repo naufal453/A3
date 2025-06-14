@@ -13,11 +13,11 @@
                     <div class="mb-3">
                         <label for="title" class="form-label">Chapter Title</label>
                         <input type="text" class="form-control" id="title" name="title" minlength="9"
-                            maxlength="60" style="height: 50px; resize: none;">
+                            maxlength="60" style="height: 50px; resize: none;" required>
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">Chapter Content</label>
-                        <div id="quill-editor-{{ $post->id }}" style="height: 300px;"></div>
+                        <div id="quill-container-{{ $post->id }}"></div>
                         <input type="hidden" id="content-{{ $post->id }}" name="content" maxlength="250" required>
                         <div id="content-warning-{{ $post->id }}" class="text-danger mt-2"></div>
                         <div id="content-counter-{{ $post->id }}" class="text-muted mt-2"></div>
@@ -32,3 +32,90 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const postId = "{{ $post->id }}";
+        const quillContainer = document.getElementById(`quill-container-${postId}`);
+        const hiddenInput = document.getElementById(`content-${postId}`);
+        const warningEl = document.getElementById(`content-warning-${postId}`);
+        const counterEl = document.getElementById(`content-counter-${postId}`);
+        const form = quillContainer.closest('form');
+
+        // Create and attach editor
+        const editorDiv = document.createElement('div');
+        editorDiv.style.height = '300px';
+        quillContainer.appendChild(editorDiv);
+
+        const quill = new Quill(editorDiv, {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'script': 'sub'
+                    }, {
+                        'script': 'super'
+                    }],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'align': []
+                    }],
+                    ['link'],
+                    ['clean']
+                ]
+            }
+        });
+
+        // Character counter and hidden input update
+        quill.on('text-change', function() {
+            const plainText = quill.getText().trim();
+            const length = plainText.length;
+
+            hiddenInput.value = quill.root.innerHTML.trim(); // store full content
+            counterEl.textContent = `${length}/1000 characters`;
+
+            if (length > 1000) {
+                counterEl.classList.add('text-danger');
+            } else {
+                counterEl.classList.remove('text-danger');
+            }
+        });
+
+        // Form validation on submit
+        form.addEventListener('submit', function(e) {
+            const plainText = quill.getText().trim();
+            const length = plainText.length;
+
+            if (length === 0) {
+                e.preventDefault();
+                warningEl.textContent = 'Content cannot be empty.';
+                return;
+            }
+
+            if (length > 1000) {
+                e.preventDefault();
+                warningEl.textContent = 'Content exceeds 1000 characters.';
+                return;
+            }
+
+            warningEl.textContent = '';
+        });
+    });
+</script>

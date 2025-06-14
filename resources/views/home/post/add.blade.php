@@ -82,8 +82,10 @@
                     </style>
 
                     <!-- Quill Editor -->
-                    <div id="quill-editor" style="height: 350px;"></div>
+                    <div id="quill-container"></div>
                     <input type="hidden" id="description" name="description">
+                    <div id="content-warning" class="text-danger mt-2"></div>
+                    <div id="content-counter" class="text-muted mt-2"></div>
                     <br>
                     <!-- Image upload with preview -->
                     <div class="input-group mb-3">
@@ -171,8 +173,18 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        const hiddenInput = document.getElementById('description');
+        const warningEl = document.getElementById('content-warning');
+        const counterEl = document.getElementById('content-counter');
+        const form = document.querySelector('form');
+
+        // Create the editor div dynamically
+        const editorDiv = document.createElement('div');
+        editorDiv.style.height = '350px';
+        document.getElementById('quill-container').appendChild(editorDiv);
+
         // Initialize Quill
-        var quill = new Quill('#quill-editor', {
+        var quill = new Quill(editorDiv, {
             theme: 'snow',
             placeholder: 'Write your content here...',
             modules: {
@@ -181,7 +193,7 @@
                         header: [1, 2, false]
                     }],
                     ['bold', 'italic', 'underline'],
-                    ['link', 'image'],
+                    ['link'],
                     [{
                         list: 'ordered'
                     }, {
@@ -192,16 +204,43 @@
             }
         });
 
-        var form = document.querySelector('form');
-        var imageInput = document.getElementById('image');
+        // Character counter and hidden input update
+        quill.on('text-change', function() {
+            const plainText = quill.getText().trim();
+            const length = plainText.length;
 
+            hiddenInput.value = quill.root.innerHTML.trim(); // store full content
+            counterEl.textContent = `${length}/1000 characters`;
+
+            if (length > 1000) {
+                counterEl.classList.add('text-danger');
+            } else {
+                counterEl.classList.remove('text-danger');
+            }
+        });
+
+        // Form validation on submit
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            var descriptionInput = document.querySelector('#description');
+            const plainText = quill.getText().trim();
+            const length = plainText.length;
+
+            if (length === 0) {
+                warningEl.textContent = 'Content cannot be empty.';
+                return;
+            }
+
+            if (length > 1000) {
+                warningEl.textContent = 'Content exceeds 1000 characters.';
+                return;
+            }
+
+            warningEl.textContent = '';
+
             var quillContent = quill.root.innerHTML;
             var sanitizedContent = DOMPurify.sanitize(quillContent);
-            descriptionInput.value = sanitizedContent;
+            hiddenInput.value = sanitizedContent;
 
             // Now submit the form programmatically
             form.submit();

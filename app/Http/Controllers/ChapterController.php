@@ -6,17 +6,33 @@ use App\Http\Requests\ChapterRequest;
 use App\Models\Chapter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
 
-class ChapterController extends Controller
+class ChapterController extends BaseController
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Store a newly created chapter.
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string|max:10000',
+            'content' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    // Hilangkan tag HTML kosong
+                    $plain = trim(strip_tags($value));
+                    if ($plain === '') {
+                        $fail('The chapter content field is required.');
+                    }
+                },
+            ],
             'post_id' => 'required|exists:posts,id',
         ]);
 
@@ -65,9 +81,17 @@ class ChapterController extends Controller
     {
         $chapter = Chapter::find($id);
 
-        if ($chapter && $chapter->user_id == Auth::id()) {
-            $chapter->delete();
+        // Check if chapter exists
+        if (!$chapter) {
+            abort(404);
         }
+
+        // Check if user is authorized to delete this chapter
+        if ($chapter->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $chapter->delete();
 
         return redirect()->back()->with('success', 'Chapter deleted successfully.');
     }

@@ -27,6 +27,21 @@
                                     {{ session('success') }}
                                 </div>
                             @endif
+
+                            {{-- Tampilkan error password salah --}}
+                            @if ($errors->has('current_password'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('current_password') }}
+                                </div>
+                            @endif
+
+                            {{-- Tampilkan error password dan konfirmasi tidak sama --}}
+                            @if ($errors->has('password'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('password') }}
+                                </div>
+                            @endif
+
                             <label for="username" class="control-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username"
                                 value="{{ auth()->user()->username }}" required>
